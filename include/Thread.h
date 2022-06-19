@@ -30,7 +30,7 @@ private:
 
     bool started_;
     bool joined_;
-    std::shared_ptr<std::thread> thread_;
+    std::shared_ptr<std::thread> thread_;   // 需要控制线程对象产生的时机,不能直接使用thread会直接启动
     pid_t tid_;
     ThreadFunc func_;
     std::string name_;

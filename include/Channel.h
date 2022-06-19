@@ -11,14 +11,14 @@ class EventLoop;
 
 /*
  * EventLoop, Channel, Poller之间的关系 对应多路事件分发器
- * Channel在muduo中封装了sockfd和其感兴趣的event,如EPOLLIN,EPOLLOUT事件
+ * Channel理解为通道 Channel在muduo中封装了sockfd和其感兴趣的event,如EPOLLIN,EPOLLOUT事件
  * 还绑定了poller返回的具体事件
  */
 class Channel : noncopyable
 {
 public:
     using EventCallback = std::function<void()>;
-    using ReadEventCallback = std::function<void(TimeStamp)>;   // 为什么单独设置一个ReadEventCallback
+    using ReadEventCallback = std::function<void(TimeStamp)>;  
 
     Channel(EventLoop* loop, int fd);
     ~Channel();
@@ -63,7 +63,7 @@ private:
 
     static constexpr int kNoneEvent = 0;
     static constexpr int kReadEvent = EPOLLIN | EPOLLPRI;
-    static constexpr int kWriteEvent = EPOLLOUT;
+    static constexpr int kWriteEvent = EPOLLOUT; 
 
     EventLoop* loop_; // 事件循环
     const int fd_;    // poller监听的对象
@@ -74,7 +74,7 @@ private:
     std::weak_ptr<void> tie_;
     bool tied_;
     
-    // 因为Channel通道里面能够获知fd最终发生的具体时间revents,所以它负责调用具体事件的回调操作
+    // 因为Channel通道里面能够获知fd最终发生的具体事件revents,所以它负责调用具体事件的回调操作
     ReadEventCallback readCallback_;
     EventCallback writeCallback_;
     EventCallback closeCallback_;

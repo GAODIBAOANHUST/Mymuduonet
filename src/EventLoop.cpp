@@ -52,7 +52,7 @@ EventLoop::~EventLoop()
     t_loopInthisThread = nullptr;
 }
 
-void EventLoop::handleRead()
+void EventLoop:: handleRead()
 {
     uint64_t one = 1;
     ssize_t n = read(wakeupFd_, &one, sizeof one);
@@ -126,7 +126,7 @@ void EventLoop::queueInLoop(Functor cb)
         pendintFunctors_.emplace_back(cb);
     }
     // 唤醒相应的,需要执行上面回调操作的loop的线程了
-    // callingPendingFunctors_的意思是当前loop正在执行回调<但是loop又有了新的回调
+    // callingPendingFunctors_的意思是当前loop正在执行回调,但是loop又有了新的回调
     if (!isInLoopThread() || callingPendingFunctors_) // 这里的callingPendingFunctors_逻辑待解释
     {
         wakeup(); // 唤醒loop所在线程

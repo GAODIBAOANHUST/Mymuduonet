@@ -33,7 +33,6 @@ Acceptor::~Acceptor()
 {
     acceptChannel_.disableAll();
     acceptChannel_.remove();
-    
 }
 
 void Acceptor::listen()
@@ -56,7 +55,7 @@ void Acceptor::handleRead()
         }
         else
         {
-            ::close(connfd);
+            ::close(connfd); 
         }
     }
     else
